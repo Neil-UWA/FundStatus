@@ -12,7 +12,7 @@ var getFundStatus = function(){
   });
 
   _downOrUp = function(realTimeFundIndex){
-    return (realTimeFundIndex - fundToday)/fundToday;
+    return ((realTimeFundIndex - fundToday)/fundToday*100).toPrecision(4) + "%";
   };
 };
 
@@ -26,6 +26,6 @@ var getNetFund = function(){
   });
 };
 
-setImmediate(getNetFund());
+setImmediate(getNetFund);
 setImmediate(getFundStatus);
 setInterval(getFundStatus, 1000*60);
