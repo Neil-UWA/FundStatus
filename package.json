@@ -1,0 +1,17 @@
+{
+  "name": "Scraping",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Neil",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.4.5",
+    "request": "^2.36.0",
+    "cheerio": "^0.17.0",
+    "mongodb": "^1.4.17"
+  }
+}
