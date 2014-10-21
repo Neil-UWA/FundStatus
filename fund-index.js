@@ -3,11 +3,11 @@ var cheerio   = require('cheerio'),
     async     = require('async'),
     util      = require('util'),
     fundURL   = 'http://fund.eastmoney.com/%s.html',
-    fundLists = process.argv.slice(2);
+    fundLists = process.argv.slice(2) == [] ? process.argv.slice(2) : ['161024'];
 
 var getFundStatus = function(fundCode){
-  var fundYesterday,
-      url = util.format(fundURL, fundCode);
+  var url = util.format(fundURL, fundCode),
+      fundYesterday;
 
   request.get(url, function(err, res, body){
     var $ = cheerio.load(body);
