@@ -1,33 +1,36 @@
-var cheerio = require('cheerio');
-var request = require('request');
+var cheerio = require('cheerio'),
+    request = require('request'),
+    async = require('async'),
+    util = require('util');
 
-var fundToday;
+var fundYesterday,
+    _fundURL = 'http://fund.eastmoney.com/%s.html',
+    fundLists = Array.prototype.slice.call(process.argv, 2);
 
-var getFundStatus = function(){
-  var _fundURL = 'http://fund.eastmoney.com/161024.html';
-
-  request.get(_fundURL, function(err, res, body){
+var getFundStatus = function(fundCode){
+  request.get(util.format(_fundURL, fundCode), function(err, res, body){
     var $ = cheerio.load(body);
     var realTimeFundIndex = parseFloat($('#statuspzgz').children().first().text());
-    console.log(realTimeFundIndex + " | "+ _downOrUp(realTimeFundIndex));
+    console.log(fundCode + " | " + realTimeFundIndex + " | "+ _downOrUp(realTimeFundIndex));
   });
 
   _downOrUp = function(realTimeFundIndex){
-    return ((realTimeFundIndex - fundToday)/fundToday*100).toPrecision(4) + "%";
+    return ((realTimeFundIndex - fundYesterday)/fundYesterday*100).toPrecision(4) + "%";
   };
 };
 
-var getNetFund = function(){
-  var _fullGoalURL = 'http://www.fullgoal.com.cn/funds/zhishu/161024/index.html';
-
-  request.get(_fullGoalURL, function(err, res, body){
+var getNetFund = function(fundCode){
+  request.get(util.format(_fundURL, fundCode), function(err, res, body){
     var $ = cheerio.load(body);
-    fundToday = parseFloat($('.baseinfo').first().children().eq(1).text().split('：')[1]);
-    console.log("今日净值："+ fundToday);
+    fundYesterday = parseFloat($('.left12').children().first().text());
+    console.log("%s 昨日净值：%s", fundCode, fundYesterday);
   });
 };
 
-getNetFund();
-getFundStatus();
-setInterval(getFundStatus, 1000*60);
+function run(fundCode, callback){
+  setImmediate(getNetFund,fundCode);
+  setImmediate(getFundStatus,fundCode);
+  setInterval(getFundStatus, 1000*60, fundCode);
+};
 
+async.each(fundLists, run, function(err){});
