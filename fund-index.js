@@ -27,7 +27,7 @@ var getNetFund = function(){
   });
 };
 
-setImmediate(getNetFund);
-setImmediate(getFundStatus);
+getNetFund();
+getFundStatus();
 setInterval(getFundStatus, 1000*60);
 
