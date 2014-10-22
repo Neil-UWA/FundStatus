@@ -29,7 +29,7 @@ var getFundStatus = function(fundCode){
 };
 
 function run(fundCode, callback){
-  setInterval(getFundStatus(fundCode), 1000);
+  setInterval(getFundStatus(fundCode), 1000*60);
 };
 
 async.each(fundLists, run, console.error);
