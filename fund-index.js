@@ -37,14 +37,17 @@ Fund.prototype.getFundStatus = function(){
       if (err) throw new Error(err);
       var $ = cheerio.load(body);
       _this.realTimeFundIndex = parseFloat($('#statuspzgz').children().first().text());
-      if (_this._changed()) {
-        console.log(_this.fundCode + " | " + _this.realTimeFundIndex + " | "+ _this._downOrUp());
-      }
+      if (_this._changed()) _this.showFundIndex();
       _this.previousFundIndex = _this.realTimeFundIndex;
     });
   } catch(e){
     console.error(e);
   }
+};
+
+Fund.prototype.showFundIndex = function(){
+  var now = new Date();
+  console.log("%s | %s | %s | %s", this.fundCode, this.realTimeFundIndex, this._downOrUp(), now.toDateString());
 };
 
 Fund.prototype._changed = function(){
@@ -59,7 +62,7 @@ function run(fundCode, callback){
   var fund = new Fund(fundCode);
   fund.getYesterdayFund();
   fund.getFundStatus();
-  setInterval(function(){ fund.getFundStatus() }, 1000);
+  setInterval(function(){ fund.getFundStatus() }, 1000*60);
 };
 
 async.each(fundLists, run, console.error);
