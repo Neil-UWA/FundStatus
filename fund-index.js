@@ -1,9 +1,7 @@
 var cheerio   = require('cheerio'),
     request   = require('request'),
-    async     = require('async'),
     util      = require('util'),
-    baseURL   = 'http://fund.eastmoney.com/%s.html',
-    fundLists = process.argv.slice(2) == [] ? process.argv.slice(2) : ['161024'];
+    baseURL   = 'http://fund.eastmoney.com/%s.html';
 
 var Fund = function(fundCode){
   this.fundCode = fundCode;
@@ -48,16 +46,4 @@ Fund.prototype._downOrUp = function(){
   return ((this.realTimeFundIndex - this.fundYesterday)/this.fundYesterday*100).toPrecision(4) + "%";
 };
 
-function run(fundCode, callback){
-  var fund = new Fund(fundCode);
-  try{
-    fund.getYesterdayFund();
-    fund.getFundStatus();
-    setInterval(function(){ fund.getFundStatus() }, 1000*60);
-  } catch(e){
-    console.error(e);
-  }
-};
-
-console.log(fundLists);
-async.each(fundLists, run, console.error);
+module.exports = Fund;
