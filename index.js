@@ -1,4 +1,4 @@
-var FundRunner = require('./fund_runner');
+var FundRunner = require('./lib/fund_runner');
 
 var fundRunner = new FundRunner();
 

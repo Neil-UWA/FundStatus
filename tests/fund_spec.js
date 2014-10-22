@@ -2,7 +2,7 @@ var chai    = require('chai'),
     expect  = chai.expect,
     util    = require('util'),
     sinon   = require('sinon'),
-    Fund    = require('./fund');
+    Fund    = require('../lib/fund');
 
 describe('Fund', function(){
   beforeEach(function(){
