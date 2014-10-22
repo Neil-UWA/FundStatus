@@ -16,32 +16,24 @@ var Fund = function(fundCode){
 Fund.prototype.getYesterdayFund = function(){
   var _this = this;
 
-  try{
-    request.get(this.fundURL, function(err, res, body){
-      if (err) throw new Error(e);
-      var $ = cheerio.load(body);
-      _this.fundYesterday = parseFloat($('.left12').children().first().text());
-      console.log("%s 昨日净值：%s", _this.fundCode, _this.fundYesterday);
-    });
-  } catch(e) {
-    console.error(e);
-  }
+  request.get(this.fundURL, function(err, res, body){
+    if (err) throw new Error(e);
+    var $ = cheerio.load(body);
+    _this.fundYesterday = parseFloat($('.left12').children().first().text());
+    console.log("%s 昨日净值：%s", _this.fundCode, _this.fundYesterday);
+  });
 };
 
 Fund.prototype.getFundStatus = function(){
   var _this = this;
 
-  try{
-    request.get(this.fundURL, function(err, res, body){
-      if (err) throw new Error(err);
-      var $ = cheerio.load(body);
-      _this.realTimeFundIndex = parseFloat($('#statuspzgz').children().first().text());
-      if (_this._changed()) _this.showFundIndex();
-      _this.previousFundIndex = _this.realTimeFundIndex;
-    });
-  } catch(e){
-    console.error(e);
-  }
+  request.get(this.fundURL, function(err, res, body){
+    if (err) throw new Error(err);
+    var $ = cheerio.load(body);
+    _this.realTimeFundIndex = parseFloat($('#statuspzgz').children().first().text());
+    if (_this._changed()) _this.showFundIndex();
+    _this.previousFundIndex = _this.realTimeFundIndex;
+  });
 };
 
 Fund.prototype.showFundIndex = function(){
@@ -58,9 +50,14 @@ Fund.prototype._downOrUp = function(){
 
 function run(fundCode, callback){
   var fund = new Fund(fundCode);
-  fund.getYesterdayFund();
-  fund.getFundStatus();
-  setInterval(function(){ fund.getFundStatus() }, 1000*60);
+  try{
+    fund.getYesterdayFund();
+    fund.getFundStatus();
+    setInterval(function(){ fund.getFundStatus() }, 1000*60);
+  } catch(e){
+    console.error(e);
+  }
 };
 
+console.log(fundLists);
 async.each(fundLists, run, console.error);
