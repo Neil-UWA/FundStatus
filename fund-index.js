@@ -45,8 +45,7 @@ Fund.prototype.getFundStatus = function(){
 };
 
 Fund.prototype.showFundIndex = function(){
-  var now = new Date();
-  console.log("%s | %s | %s | %s", this.fundCode, this.realTimeFundIndex, this._downOrUp(), now.toDateString());
+  console.log("%s | %s | %s | %s", this.fundCode, this.realTimeFundIndex, this._downOrUp(), new Date().toLocaleString());
 };
 
 Fund.prototype._changed = function(){
