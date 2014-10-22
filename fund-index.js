@@ -11,7 +11,6 @@ var Fund = function(fundCode){
   this.fundYesterday = 0.0;
   this.realTimeFundIndex = 0.0;
   this.previousFundIndex = 0.0;
-  this.fundChanged = false;
 };
 
 Fund.prototype.getYesterdayFund = function(){
