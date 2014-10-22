@@ -2,10 +2,10 @@
   "name": "Scraping",
   "version": "0.0.0",
   "description": "",
-  "main": "fund-index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node fund-index.js"
+    "start": "node index.js"
   },
   "author": "Neil",
   "license": "ISC",
