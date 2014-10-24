@@ -26,7 +26,9 @@ class Fund
       @previousFundIndex = @realTimeFundIndex
 
   showFundIndex: ->
-    console.log "%s | %s | %s | %s", @fundCode, @realTimeFundIndex, @_downOrUp(), new Date().toLocaleString()
+    console.log @fundCode
+    console.log '\t%s | %s', @realTimeFundIndex, @_downOrUp()
+    console.log "\t%s", new Date().toLocaleString()
 
   _changed: ->
     @realTimeFundIndex != @previousFundIndex
