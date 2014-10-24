@@ -22,16 +22,13 @@ class Fund
       throw new Error err if err
       $ = cheerio.load body
       @realTimeFundIndex = parseFloat($('#statuspzgz').children().first().text())
-      @showFundIndex() if @_changed()
+      @showFundIndex() if @realTimeFundIndex != @previousFundIndex
       @previousFundIndex = @realTimeFundIndex
 
   showFundIndex: ->
     console.log @fundCode
     console.log '\t%s | %s', @realTimeFundIndex, @_downOrUp()
     console.log "\t%s", new Date().toLocaleString()
-
-  _changed: ->
-    @realTimeFundIndex != @previousFundIndex
 
   _downOrUp: ->
     ((@realTimeFundIndex - @fundYesterday)/@fundYesterday*100).toPrecision(4) + "%"

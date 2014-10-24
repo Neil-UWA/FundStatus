@@ -8,7 +8,7 @@ class FundWorker
     try
       @fund.getYesterdayFund()
       @fund.getFundStatus()
-      setInterval((=> @fund.getFundStatus()), 1000)
+      setInterval((=> @fund.getFundStatus()), 1000*60)
     catch e
       callback(e)
 
