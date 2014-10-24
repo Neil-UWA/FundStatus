@@ -1,6 +1,7 @@
-cheerio   = require('cheerio')
-request   = require('request')
-util      = require('util')
+cheerio   = require 'cheerio'
+colors    = require 'colors'
+request   = require 'request'
+util      = require 'util'
 baseURL   = 'http://fund.eastmoney.com/%s.html'
 
 class Fund
@@ -25,8 +26,8 @@ class Fund
       @previousFundIndex = @realTimeFundIndex
 
   showFundStatus: ->
-    console.log "%s\t昨日净值：%s", @fundCode, @fundYesterday
-    console.log '\t%s | %s', @realTimeFundIndex, @_downOrUp()
+    console.log colors.green("%s\t昨日净值：%s"), @fundCode, @fundYesterday
+    console.log "\t%s | %s", @realTimeFundIndex, @_downOrUp()
     console.log "\t%s\n", new Date().toLocaleString()
 
   _downOrUp: ->
