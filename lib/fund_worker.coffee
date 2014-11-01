@@ -5,11 +5,8 @@ class FundWorker
     @fund = new Fund(fundCode)
 
   worker: (callback)->
-    try
       @fund.getYesterdayFund()
       @fund.getFundStatus()
       setInterval((=> @fund.getFundStatus()), 1000*60)
-    catch e
-      callback(e)
 
 module.exports = FundWorker
